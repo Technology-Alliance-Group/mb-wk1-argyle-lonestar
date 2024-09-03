@@ -1,0 +1,522 @@
+<html><head><base href="https://websim.io/future-of-generative-ui/10x%20fine-tune%20website%20and%20add%20gen%20ai%20images%20to%20each%20section">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Moneyball High School Football Insights</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-annotation/2.1.0/chartjs-plugin-annotation.min.js"></script>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+  
+  body {
+    font-family: 'Inter', sans-serif;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  
+  .dark {
+    background-color: #1a202c;
+    color: #e2e8f0;
+  }
+  
+  .light {
+    background-color: #f7fafc;
+    color: #2d3748;
+  }
+  
+  .stats-card {
+    border-radius: 16px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .dark .stats-card {
+    background-color: #2d3748;
+  }
+  
+  .light .stats-card {
+    background-color: white;
+  }
+  
+  .stats-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
+  }
+  
+  .insight {
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .dark .insight {
+    background-color: #4a5568;
+    border-left: 4px solid #63b3ed;
+  }
+  
+  .light .insight {
+    background-color: #ebf8ff;
+    border-left: 4px solid #3182ce;
+  }
+  
+  .theme-toggle {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+  }
+  
+  .apple-switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+  }
+  
+  .apple-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+    border-radius: 34px;
+  }
+  
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+  }
+  
+  input:checked + .slider {
+    background-color: #2196F3;
+  }
+  
+  input:checked + .slider:before {
+    transform: translateX(26px);
+  }
+
+  .annotation {
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 4px;
+    padding: 4px 8px;
+    font-size: 12px;
+    pointer-events: none;
+  }
+
+  .dark .annotation {
+    background-color: rgba(45, 55, 72, 0.8);
+    color: #e2e8f0;
+  }
+</style>
+</head>
+<body class="p-4 md:p-8 light">
+  <div class="theme-toggle">
+    <label class="apple-switch">
+      <input type="checkbox" id="theme-toggle">
+      <span class="slider"></span>
+    </label>
+  </div>
+
+  <header class="text-center mb-8">
+    <h1 class="text-4xl font-bold mb-2">Moneyball High School Football Insights</h1>
+    <p class="text-xl opacity-75">Argyle Eagles vs. Lone Star Rangers</p>
+  </header>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <!-- Score and Efficiency Card -->
+    <div class="stats-card p-6">
+      <h2 class="text-2xl font-semibold mb-4">Game Score</h2>
+      <div class="flex justify-between items-center mb-4">
+        <div class="text-center">
+          <p class="text-lg font-bold">Argyle Eagles</p>
+          <p class="text-4xl font-bold text-red-600">17</p>
+        </div>
+        <div class="text-center">
+          <p class="text-lg font-bold">Lone Star Rangers</p>
+          <p class="text-4xl font-bold text-blue-600">24</p>
+        </div>
+      </div>
+      <div class="insight p-4 mt-4">
+        <p class="font-semibold mb-2">Efficiency Insights:</p>
+        <ul class="list-disc pl-5">
+          <li>Points per Play: Argyle 0.29, Lone Star 0.40</li>
+          <li>Yards per Point: Argyle 24.7, Lone Star 17.9</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Passing Efficiency -->
+    <div class="stats-card p-6">
+      <h2 class="text-2xl font-semibold mb-4">Passing Efficiency</h2>
+      <canvas id="passingEfficiencyChart"></canvas>
+      <div class="insight p-4 mt-4">
+        Lone Star's QB Rating of 110.8 vs Argyle's 77.5 indicates superior passing performance, translating to 1.42 more yards per attempt.
+      </div>
+    </div>
+
+    <!-- Rushing Effectiveness -->
+    <div class="stats-card p-6">
+      <h2 class="text-2xl font-semibold mb-4">Rushing Effectiveness</h2>
+      <canvas id="rushingEffectivenessChart"></canvas>
+      <div class="insight p-4 mt-4">
+        Despite fewer total yards, Argyle's 6.4 yards per carry vs Lone Star's 3.4 suggests more efficient ground game utilization.
+      </div>
+    </div>
+
+    <!-- Player Impact Scores -->
+    <div class="stats-card p-6">
+      <h2 class="text-2xl font-semibold mb-4">Player Impact Scores</h2>
+      <ul class="space-y-2">
+        <li class="flex items-center">
+          <span class="w-1/2">Rece Hoyt (LS):</span>
+          <div class="w-1/2 bg-gray-200 rounded-full h-4">
+            <div class="bg-blue-600 h-4 rounded-full" style="width: 95%"></div>
+          </div>
+          <span class="ml-2">9.5</span>
+        </li>
+        <li class="flex items-center">
+          <span class="w-1/2">Watson Bell (Arg):</span>
+          <div class="w-1/2 bg-gray-200 rounded-full h-4">
+            <div class="bg-red-600 h-4 rounded-full" style="width: 87%"></div>
+          </div>
+          <span class="ml-2">8.7</span>
+        </li>
+        <li class="flex items-center">
+          <span class="w-1/2">Will Krzysiak (Arg):</span>
+          <div class="w-1/2 bg-gray-200 rounded-full h-4">
+            <div class="bg-red-600 h-4 rounded-full" style="width: 79%"></div>
+          </div>
+          <span class="ml-2">7.9</span>
+        </li>
+        <li class="flex items-center">
+          <span class="w-1/2">Ryder Mix (LS):</span>
+          <div class="w-1/2 bg-gray-200 rounded-full h-4">
+            <div class="bg-blue-600 h-4 rounded-full" style="width: 76%"></div>
+          </div>
+          <span class="ml-2">7.6</span>
+        </li>
+      </ul>
+      <div class="insight p-4 mt-4">
+        Impact scores factor in yardage, scoring, and situation-weighted play outcomes.
+      </div>
+    </div>
+
+    <!-- Situational Effectiveness -->
+    <div class="stats-card p-6">
+      <h2 class="text-2xl font-semibold mb-4">Situational Effectiveness</h2>
+      <div class="space-y-4">
+        <div>
+          <p class="font-semibold">3rd Down Conversion</p>
+          <div class="flex items-center mt-2">
+            <span class="w-1/4">Lone Star:</span>
+            <div class="w-1/2 bg-gray-200 rounded-full h-4">
+              <div class="bg-blue-600 h-4 rounded-full" style="width: 41%"></div>
+            </div>
+            <span class="ml-2">41%</span>
+          </div>
+          <div class="flex items-center mt-2">
+            <span class="w-1/4">Argyle:</span>
+            <div class="w-1/2 bg-gray-200 rounded-full h-4">
+              <div class="bg-red-600 h-4 rounded-full" style="width: 38%"></div>
+            </div>
+            <span class="ml-2">38%</span>
+          </div>
+        </div>
+        <div>
+          <p class="font-semibold">Red Zone Efficiency</p>
+          <div class="flex items-center mt-2">
+            <span class="w-1/4">Lone Star:</span>
+            <div class="w-1/2 bg-gray-200 rounded-full h-4">
+              <div class="bg-blue-600 h-4 rounded-full" style="width: 75%"></div>
+            </div>
+            <span class="ml-2">75%</span>
+          </div>
+          <div class="flex items-center mt-2">
+            <span class="w-1/4">Argyle:</span>
+            <div class="w-1/2 bg-gray-200 rounded-full h-4">
+              <div class="bg-red-600 h-4 rounded-full" style="width: 67%"></div>
+            </div>
+            <span class="ml-2">67%</span>
+          </div>
+        </div>
+        <div>
+          <p class="font-semibold">4th Quarter Points</p>
+          <div class="flex items-center mt-2">
+            <span class="w-1/4">Lone Star:</span>
+            <div class="w-1/2 bg-gray-200 rounded-full h-4">
+              <div class="bg-blue-600 h-4 rounded-full" style="width: 70%"></div>
+            </div>
+            <span class="ml-2">7</span>
+          </div>
+          <div class="flex items-center mt-2">
+            <span class="w-1/4">Argyle:</span>
+            <div class="w-1/2 bg-gray-200 rounded-full h-4">
+              <div class="bg-red-600 h-4 rounded-full" style="width: 0%"></div>
+            </div>
+            <span class="ml-2">0</span>
+          </div>
+        </div>
+      </div>
+      <div class="insight p-4 mt-4">
+        Lone Star's superior situational play, especially in the 4th quarter, was likely the deciding factor in their victory.
+      </div>
+    </div>
+
+    <!-- Game-Changing Plays -->
+    <div class="stats-card p-6">
+      <h2 class="text-2xl font-semibold mb-4">Game-Changing Plays</h2>
+      <ol class="space-y-4">
+        <li class="flex items-center">
+          <span class="font-bold text-2xl mr-4">1</span>
+          <div>
+            <p class="font-semibold">Lone Star's 4th quarter TD</p>
+            <div class="flex items-center mt-2">
+              <span class="w-1/2">Win Probability Change:</span>
+              <div class="w-1/3 bg-gray-200 rounded-full h-4">
+                <div class="bg-green-600 h-4 rounded-full" style="width: 90%"></div>
+              </div>
+              <span class="ml-2">+18%</span>
+            </div>
+          </div>
+        </li>
+        <li class="flex items-center">
+          <span class="font-bold text-2xl mr-4">2</span>
+          <div>
+            <p class="font-semibold">Argyle's 3rd quarter turnover</p>
+            <div class="flex items-center mt-2">
+              <span class="w-1/2">Win Probability Change:</span>
+              <div class="w-1/3 bg-gray-200 rounded-full h-4">
+                <div class="bg-red-600 h-4 rounded-full" style="width: 60%"></div>
+              </div>
+              <span class="ml-2">-12%</span>
+            </div>
+          </div>
+        </li>
+        <li class="flex items-center">
+          <span class="font-bold text-2xl mr-4">3</span>
+          <div>
+            <p class="font-semibold">Lone Star's 28-yard FG before halftime</p>
+            <div class="flex items-center mt-2">
+              <span class="w-1/2">Win Probability Change:</span>
+              <div class="w-1/3 bg-gray-200 rounded-full h-4">
+                <div class="bg-green-600 h-4 rounded-full" style="width: 45%"></div>
+              </div>
+              <span class="ml-2">+9%</span>
+            </div>
+          </div>
+        </li>
+      </ol>
+      <div class="insight p-4 mt-4">
+        These high-leverage plays had the most significant impact on the game's outcome.
+      </div>
+    </div>
+  </div>
+
+  <div class="mt-8 stats-card p-6">
+    <h2 class="text-2xl font-semibold mb-4">Key Takeaways and Future Projections</h2>
+    <ul class="space-y-4">
+      <li class="flex items-center">
+        <svg class="w-6 h-6 mr-2 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+        Lone Star's balanced offense (57% pass, 43% run) kept Argyle's defense guessing.
+      </li>
+      <li class="flex items-center">
+        <svg class="w-6 h-6 mr-2 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+        Argyle's reliance on the run (53% of total yards) may become predictable in future games.
+      </li>
+      <li class="flex items-center">
+        <svg class="w-6 h-6 mr-2 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
+        Rece Hoyt's development as a dual-threat QB could be a significant factor in Lone Star's future success.
+      </li>
+      <li class="flex items-center">
+        <svg class="w-6 h-6 mr-2 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+        Argyle's Watson Bell is on pace for a 1,500+ yard rushing season if he maintains this performance.
+      </li>
+      <li class="flex items-center">
+        <svg class="w-6 h-6 mr-2 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+        Both teams showed resilience, but Lone Star's 4th quarter performance (31% of total yards) indicates superior conditioning or adjustments.
+      </li>
+    </ul>
+    <div class="insight p-4 mt-6">
+      <p class="font-semibold mb-2">Future Projections:</p>
+      <div class="flex items-center mt-2">
+        <span class="w-1/2">Lone Star outperforming season average next game:</span>
+        <div class="w-1/3 bg-gray-200 rounded-full h-4">
+          <div class="bg-blue-600 h-4 rounded-full" style="width: 65%"></div>
+        </div>
+        <span class="ml-2">65%</span>
+      </div>
+      <div class="flex items-center mt-2">
+        <span class="w-1/2">Argyle improving red zone efficiency:</span>
+        <div class="w-1/3 bg-gray-200 rounded-full h-4">
+          <div class="bg-red-600 h-4 rounded-full" style="width: 55%"></div>
+        </div>
+        <span class="ml-2">55%</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Passing Efficiency Chart
+    const passingEfficiencyCtx = document.getElementById('passingEfficiencyChart').getContext('2d');
+    new Chart(passingEfficiencyCtx, {
+      type: 'bar',
+      data: {
+        labels: ['Completion %', 'Yards/Attempt', 'QB Rating'],
+        datasets: [{
+          label: 'Argyle',
+          data: [51.5, 11.6, 77.5],
+          backgroundColor: 'rgba(239, 68, 68, 0.6)',
+          borderColor: 'rgb(239, 68, 68)',
+          borderWidth: 1
+        },
+        {
+          label: 'Lone Star',
+          data: [61.8, 14.6, 110.8],
+          backgroundColor: 'rgba(59, 130, 246, 0.6)',
+          borderColor: 'rgb(59, 130, 246)',
+          borderWidth: 1
+        }]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          y: {
+            beginAtZero: true,
+            title: {
+              display: true,
+              text: 'Value'
+            }
+          },
+          x: {
+            title: {
+              display: true,
+              text: 'Passing Metrics'
+            }
+          }
+        },
+        plugins: {
+          annotation: {
+            annotations: {
+              line1: {
+                type: 'line',
+                yMin: 100,
+                yMax: 100,
+                borderColor: 'rgb(75, 192, 192)',
+                borderWidth: 2,
+                label: {
+                  content: 'League Average QB Rating',
+                  enabled: true,
+                  position: 'end'
+                }
+              }
+            }
+          },
+          legend: {
+            position: 'top',
+          },
+          title: {
+            display: true,
+            text: 'Passing Efficiency Comparison'
+          }
+        }
+      }
+    });
+
+    // Rushing Effectiveness Chart
+    const rushingEffectivenessCtx = document.getElementById('rushingEffectivenessChart').getContext('2d');
+    new Chart(rushingEffectivenessCtx, {
+      type: 'bar',
+      data: {
+        labels: ['Yards/Carry', 'Total Yards', '100+ Yard Rushers'],
+        datasets: [{
+          label: 'Argyle',
+          data: [6.4, 223, 1],
+          backgroundColor: 'rgba(239, 68, 68, 0.6)',
+          borderColor: 'rgb(239, 68, 68)',
+          borderWidth: 1
+        },
+        {
+          label: 'Lone Star',
+          data: [3.4, 123, 0],
+          backgroundColor: 'rgba(59, 130, 246, 0.6)',
+          borderColor: 'rgb(59, 130, 246)',
+          borderWidth: 1
+        }]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          y: {
+            beginAtZero: true,
+            title: {
+              display: true,
+              text: 'Value'
+            }
+          },
+          x: {
+            title: {
+              display: true,
+              text: 'Rushing Metrics'
+            }
+          }
+        },
+        plugins: {
+          annotation: {
+            annotations: {
+              box1: {
+                type: 'box',
+                xMin: -0.5,
+                xMax: 0.5,
+                yMin: 0,
+                yMax: 6.4,
+                backgroundColor: 'rgba(255, 99, 132, 0.25)',
+                borderColor: 'rgb(255, 99, 132)',
+                borderWidth: 1,
+                label: {
+                  content: 'Argyle\'s Exceptional YPC',
+                  enabled: true,
+                  position: 'top'
+                }
+              }
+            }
+          },
+          legend: {
+            position: 'top',
+          },
+          title: {
+            display: true,
+            text: 'Rushing Effectiveness Comparison'
+          }
+        }
+      }
+    });
+
+    // Theme toggle functionality
+    const themeToggle = document.getElementById('theme-toggle');
+    const body = document.body;
+
+    themeToggle.addEventListener('change', () => {
+      if (themeToggle.checked) {
+        body.classList.remove('light');
+        body.classList.add('dark');
+      } else {
+        body.classList.remove('dark');
+        body.classList.add('light');
+      }
+    });
+  </script>
+</body></html>
